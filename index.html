@@ -3,30 +3,41 @@
 <head>
     <title>My Text Files</title>
     <style>
-        /* Add your CSS styling here */
-        body { font-family: Arial, sans-serif; }
-        .directory { margin-bottom: 20px; }
-        a { text-decoration: none; color: blue; }
-        a:hover { text-decoration: underline; }
+        /* Your existing CSS styles */
+        #fileContent { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            margin-top: 20px; 
+            white-space: pre-line; 
+        }
     </style>
 </head>
 <body>
     <h1>Welcome to My Text Files</h1>
 
-    <div class="directory">
-        <h2>Vocabulary Files</h2>
-        <ul>
-            <li><a href="vocabulary/1.txt">1.txt</a></li>
-            <li><a href="vocabulary/2.txt">2.txt</a></li>
-        </ul>
+    <!-- ... Your existing file links ... -->
+
+    <div id="fileContent">
+        <h2>File Content</h2>
+        <div id="textContent"></div>
     </div>
 
-    <div class="directory">
-        <h2>Sentence Files</h2>
-        <ul>
-            <li><a href="sentence/1.txt">1.txt</a></li>
-            <li><a href="sentence/2.txt">2.txt</a></li>
-        </ul>
-    </div>
+    <script>
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const filePath = e.target.getAttribute('href');
+        
+                fetch(filePath)
+                    .then(response => response.text())
+                    .then(text => {
+                        document.getElementById('textContent').textContent = text;
+                    })
+                    .catch(err => {
+                        document.getElementById('textContent').textContent = 'Error loading file';
+                    });
+            }
+        });
+    </script>
 </body>
 </html>
